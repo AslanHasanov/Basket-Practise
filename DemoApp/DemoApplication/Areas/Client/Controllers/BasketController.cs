@@ -28,12 +28,15 @@ namespace DemoApplication.Areas.Client.Controllers
             {
                 return NotFound();
             }
+
+            var booksViewModel = new List<ProductCookieViewModel>();
+
             var productCookieValue = HttpContext.Request.Cookies["products"];
 
 
             if (productCookieValue == null)
             {
-                var booksViewModel = new List<ProductCookieViewModel>
+                 booksViewModel = new List<ProductCookieViewModel>
                {
                    new ProductCookieViewModel(product.Id, product.Title, string.Empty, 1, product.Price, product.Price)
                };
@@ -43,7 +46,7 @@ namespace DemoApplication.Areas.Client.Controllers
             }
             else
             {
-                var booksViewModel = JsonSerializer.Deserialize<List<ProductCookieViewModel>>(productCookieValue);
+                 booksViewModel = JsonSerializer.Deserialize<List<ProductCookieViewModel>>(productCookieValue);
 
                 var targetBookCookie = booksViewModel.FirstOrDefault(tb => tb.Id == id); // var olan kitabi cokienin icinde axtarmaq
 
@@ -62,7 +65,7 @@ namespace DemoApplication.Areas.Client.Controllers
 
             }
 
-            return ViewComponent(nameof(ShopCart));
+            return ViewComponent(nameof(ShopCart), booksViewModel);
         }
 
         [HttpGet("delete/{id}", Name = "client-basket-delete")]
@@ -76,6 +79,9 @@ namespace DemoApplication.Areas.Client.Controllers
                 return NotFound();
             }
 
+
+            var productsCookieViewModel = new List<ProductCookieViewModel>();
+
             var productCookieValue = HttpContext.Request.Cookies["products"];
 
             if (productCookieValue == null)
@@ -85,7 +91,7 @@ namespace DemoApplication.Areas.Client.Controllers
             }
 
 
-           var productsCookieViewModel = JsonSerializer.Deserialize<List<ProductCookieViewModel>>(productCookieValue);
+            productsCookieViewModel = JsonSerializer.Deserialize<List<ProductCookieViewModel>>(productCookieValue);
 
             foreach(var item in productsCookieViewModel)
             {
@@ -104,7 +110,7 @@ namespace DemoApplication.Areas.Client.Controllers
 
             HttpContext.Response.Cookies.Append("products", JsonSerializer.Serialize(productsCookieViewModel));
 
-            return ViewComponent(nameof(ShopCart));
+            return ViewComponent(nameof(ShopCart), productsCookieViewModel);
         }
 
     }

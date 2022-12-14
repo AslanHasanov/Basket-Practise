@@ -9,6 +9,11 @@ namespace DemoApplication.Areas.Client.ViewComponents
     {
         public IViewComponentResult Invoke(List<ProductCookieViewModel>? viewModels = null)
         {
+            if (viewModels is not null)
+            {
+                return View(viewModels);
+            }
+
             var productsCookieValue = HttpContext.Request.Cookies["products"];
 
             var productsCookieViewModel = new List<ProductCookieViewModel>();
