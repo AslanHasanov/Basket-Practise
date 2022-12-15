@@ -5,11 +5,6 @@
 
 
 
-@{
-   
-
-
-}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -252,12 +247,43 @@
         </div>
     </div>
 
+@*    <div id="toasterAccept" class="bg-success d-inline">
+        <span class="text-light">Email Succesifully Aded</span>
+    </div>
+    <div id="toasterError" class="bg-danger d-inline">
+        <span class="text-light">Somethins Went Wrong</span>
+    </div>*@
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+
+    <script>
+        $(document).ready(function () {
+            $("#btnSub").click(function () {
+                let aHref = this.nextElementSibling.href;
+                alert(aHref)
+
+                $.ajax(
+                    {
+                        type: "POST",
+                        url: aHref,
+                        data: {
+                            Email: $("#txtEmail").val()
+                        }
+                    });
+            });
+        });
+
+
+    </script>
+
 
     <script src="~/client/assets/js/plugins.js" asp-append-version="true"></script>
     <script src="~/client/assets/js/ajax-mail.js" asp-append-version="true"></script>
     <script src="~/client/assets/js/custom.js" asp-append-version="true"></script>
     <script src="~/client/assets/js/basket-management.js" asp-append-version="true"></script>
     <script src="~/client/assets/js/cookie-management.js" asp-append-version="true"></script>
+    <script src="~/client/assets/js/Color.js" asp-append-version="true"></script>
 
 
     @RenderSection("script", required: false)

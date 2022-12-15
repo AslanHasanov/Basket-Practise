@@ -23,7 +23,7 @@ namespace DemoApplication.Areas.Admin.Controllers
         [HttpGet("list", Name = "admin-subscribe-list")]
         public async Task<IActionResult> ListAsync()
         {
-            var model = _dataContext.Subscribes.Select(s=> new ListViewModel(s.Id,s.Email, s.CreatedAt,s.UpdatedAt)).ToListAsync();
+            var model = await _dataContext.Subscribes.Select(s=> new ListViewModel(s.Id,s.Email, s.CreatedAt,s.UpdatedAt)).ToListAsync();
 
             return View(model);
         }

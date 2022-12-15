@@ -25,20 +25,30 @@ namespace DemoApplication.Areas.Client.Controllers
         [HttpPost("add", Name = "client-subscribe-add")]
         public async Task< IActionResult> AddAsync(AddViewModel model)
         {
+
             if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
 
-            _dataContext.Subscribes.Add(new Subscribe
+
+            if (_dataContext.Subscribes.Any(s=> s.Email == model.Email))
+            {
+                 ModelState.AddModelError(string.Empty, "Email alredy used");
+                return BadRequest();
+            }
+
+            _dataContext.Subscribes.Add(new  Database.Models.Subscribe
             {
                 Email= model.Email,
                 CreatedAt= DateTime.Now,
             });
 
-            _dataContext.SaveChangesAsync();
+           await _dataContext.SaveChangesAsync();
 
             return Ok();
         }
+
+       
     }
 }
