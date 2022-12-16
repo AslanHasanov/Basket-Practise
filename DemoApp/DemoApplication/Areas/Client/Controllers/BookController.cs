@@ -142,6 +142,21 @@ namespace DemoApplication.Areas.Client.Controllers
         }
 
         #endregion
+
+
+        #region Modal
+        [HttpGet("BookModal/{id}", Name = "book-BookModal")]
+        public ActionResult GetBookModal([FromRoute] int id)
+        {
+            var book = _dbContext.Books.Include(a=>a.Author).FirstOrDefault(b => b.Id == id);
+            if (book is null)
+            {
+                return NotFound();
+            }
+
+            return PartialView("~/Areas/Client/Views/Shared/Partials/_BookModalPartial.cshtml",book);
+        }
+        #endregion
     }
 }
 

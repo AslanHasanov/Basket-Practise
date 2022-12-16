@@ -27,6 +27,21 @@ $(document).on('click', '.remove-product-to-basket-btn', function (e) {
 
 })
 
+$(document).on('click', '.modal-show', function (e) {
+
+    e.preventDefault();
+    console.log(e.target.href)
+
+    fetch(e.target.href)
+        .then(response => response.text())
+        .then(data => {
+            $('.product-details-modal').html(data);
+        })
+
+    $("#quickModal").modal("show");
+
+})
+
 
 
 

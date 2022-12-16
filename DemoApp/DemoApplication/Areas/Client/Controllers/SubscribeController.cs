@@ -38,7 +38,7 @@ namespace DemoApplication.Areas.Client.Controllers
                 return BadRequest();
             }
 
-            _dataContext.Subscribes.Add(new  Database.Models.Subscribe
+            _dataContext.Subscribes.Add(new Subscribe
             {
                 Email= model.Email,
                 CreatedAt= DateTime.Now,
